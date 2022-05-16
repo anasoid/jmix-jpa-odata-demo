@@ -10,6 +10,14 @@
             </fetchPlan>
             <loader/>
         </instance>
+        <collection id="catalogDl" class="org.anasoid.jmixjpaodatademo.entity.catalog.Catalog">
+            <fetchPlan extends="_base"/>
+            <loader id="ctalogDl">
+                <query>
+                    <![CDATA[select e from Catalog e]]>
+                </query>
+            </loader>
+        </collection>
     </data>
     <facets>
         <dataLoadCoordinator auto="true"/>
@@ -29,13 +37,9 @@
     <layout spacing="true" expand="editActions">
         <form id="form" dataContainer="catalogVersionDc">
             <column width="350px">
-                <textField id="pkField" property="pk" editable="false"  datatype="long" />
-                <entityPicker id="catalogField" property="catalog">
-                    <actions>
-                        <action id="entityLookup" type="entity_lookup"/>
-                        <action id="entityClear" type="entity_clear"/>
-                    </actions>
-                </entityPicker>
+                <textField id="pkField" property="pk" editable="false" datatype="long"/>
+                <entityComboBox id="catalogField" property="catalog"
+                                pageLength="10" optionsContainer="catalogDl" />
                 <textField id="versionField" property="version"/>
             </column>
         </form>

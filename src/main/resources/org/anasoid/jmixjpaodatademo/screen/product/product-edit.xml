@@ -10,8 +10,17 @@
                 <property name="localizations" fetchPlan="_base"/>
             </fetchPlan>
             <collection id="localizedsDc" property="localizations"/>
+
             <loader/>
         </instance>
+        <collection id="catalogversionDl" class="org.anasoid.jmixjpaodatademo.entity.catalog.CatalogVersion">
+            <fetchPlan extends="_base"/>
+            <loader id="catalogVersionDl">
+                <query>
+                    <![CDATA[select e from CatalogVersion e]]>
+                </query>
+            </loader>
+        </collection>
     </data>
     <facets>
         <dataLoadCoordinator auto="true"/>
@@ -32,14 +41,15 @@
         <scrollBox id="scrollBox" spacing="true">
             <form id="form" dataContainer="productDc">
                 <column width="350px">
-                    <textField id="pkField" property="pk" editable="false"  datatype="long" />
+                    <textField id="pkField" property="pk" editable="false" datatype="long"/>
                     <textField id="codeField" property="code"/>
-                    <entityPicker id="catalogVersionField" property="catalogVersion">
+                    <entityComboBox id="catalogVersionField" property="catalogVersion"
+                                    pageLength="10" optionsContainer="catalogversionDl">
                         <actions>
-                            <action id="entityLookup" type="entity_lookup"/>
-                            <action id="entityClear" type="entity_clear"/>
+                            <action id="entityLookup" type="entity_lookup"></action>
+                            <action id="entityClear" type="entity_clear"></action>
                         </actions>
-                    </entityPicker>
+                    </entityComboBox>
                     <textField id="nameField" property="name"/>
                     <textField id="descriptionField" property="description"/>
                     <dateField id="startDateField" property="startDate"/>
@@ -54,7 +64,7 @@
                         <action id="remove" type="remove"/>
                     </actions>
                     <columns>
-                        <column id="locale"/>
+                        <column id="language"/>
                         <column id="name"/>
                         <column id="description"/>
                     </columns>

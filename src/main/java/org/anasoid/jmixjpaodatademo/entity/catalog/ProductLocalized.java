@@ -10,7 +10,7 @@ import javax.persistence.UniqueConstraint;
 
 @JmixEntity
 @Table(name = "PRODUCT_LOCALIZED", uniqueConstraints = {
-        @UniqueConstraint(name = "IDX_PRODUCT_LOCALIZED_UNQ", columnNames = {"ITEM_PK", "LOCALE"})
+        @UniqueConstraint(name = "IDX_PRODUCT_LOCALIZED_UNQ", columnNames = {"ITEM_PK", "LANG"})
 })
 @Entity
 public class ProductLocalized extends Localized<Product> {

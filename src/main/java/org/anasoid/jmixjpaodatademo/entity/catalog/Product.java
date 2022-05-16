@@ -5,16 +5,11 @@ import io.jmix.core.entity.annotation.OnDeleteInverse;
 import io.jmix.core.metamodel.annotation.JmixEntity;
 import org.anasoid.jmixjpaodatademo.entity.i18n.AbstractLocalizedItem;
 import org.anasoid.jmixjpaodatademo.i18n.LocaleContext;
-import org.springframework.data.annotation.CreatedBy;
-import org.springframework.data.annotation.CreatedDate;
-import org.springframework.data.annotation.LastModifiedBy;
-import org.springframework.data.annotation.LastModifiedDate;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import java.time.LocalDateTime;
-import java.util.Date;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
@@ -25,10 +20,10 @@ import java.util.stream.Collectors;
         @Index(columnList = "CODE, CATALOG_VERSION", unique = true)
 })
 @Entity
-public class Product extends AbstractLocalizedItem {
+public class Product extends AbstractLocalizedItem<ProductLocalized> {
 
     @NotBlank
-    @Column(name = "CODE", nullable = false)
+    @Column(name = "CODE", nullable = false, updatable = false)
     private String code;
 
     @OnDeleteInverse(DeletePolicy.DENY)
@@ -37,9 +32,6 @@ public class Product extends AbstractLocalizedItem {
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     private CatalogVersion catalogVersion;
 
-    @Column(name = "VERSION", nullable = false)
-    @Version
-    private Integer version;
 
     @Column(name = "NAME", length = 50)
     private String name;
@@ -56,26 +48,8 @@ public class Product extends AbstractLocalizedItem {
 
 
     @OneToMany(mappedBy = "item", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
-    @MapKey(name = "locale")
     private Set<ProductLocalized> localizations = new HashSet<>();
 
-    @CreatedBy
-    @Column(name = "CREATED_BY")
-    private String createdBy;
-
-    @CreatedDate
-    @Column(name = "CREATED_DATE")
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date createdDate;
-
-    @LastModifiedBy
-    @Column(name = "LAST_MODIFIED_BY")
-    private String lastModifiedBy;
-
-    @LastModifiedDate
-    @Column(name = "LAST_MODIFIED_DATE")
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date lastModifiedDate;
 
     public void setStartDate(LocalDateTime startDate) {
         this.startDate = startDate;
@@ -101,18 +75,10 @@ public class Product extends AbstractLocalizedItem {
         this.catalogVersion = catalogVersion;
     }
 
-    public Integer getVersion() {
-        return version;
-    }
-
-    public void setVersion(Integer version) {
-        this.version = version;
-    }
-
 
     public String getName() {
 //		With fallback language as English
-        Map<String, ProductLocalized> toMap = localizations.stream().collect(Collectors.toMap(t -> t.getLocale(), t -> t));
+        Map<String, ProductLocalized> toMap = localizations.stream().collect(Collectors.toMap(t -> t.getLanguage().getId(), t -> t));
 
         if (toMap.get(LocaleContext.getCurrentLocale()) == null) {
             if (toMap.get(LocaleContext.getDefaultLocale()) == null) {
@@ -126,7 +92,7 @@ public class Product extends AbstractLocalizedItem {
 
     public String getDescription() {
 //		With fallback language as English
-        Map<String, ProductLocalized> toMap = localizations.stream().collect(Collectors.toMap(t -> t.getLocale(), t -> t));
+        Map<String, ProductLocalized> toMap = localizations.stream().collect(Collectors.toMap(t -> t.getLanguage().getId(), t -> t));
         if (toMap.get(LocaleContext.getCurrentLocale()) == null) {
             if (toMap.get(LocaleContext.getDefaultLocale()) == null) {
                 return null;
@@ -160,35 +126,4 @@ public class Product extends AbstractLocalizedItem {
     }
 
 
-    public Date getCreatedDate() {
-        return createdDate;
-    }
-
-    public Date getLastModifiedDate() {
-        return lastModifiedDate;
-    }
-
-    public String getCreatedBy() {
-        return createdBy;
-    }
-
-    public void setCreatedBy(String createdBy) {
-        this.createdBy = createdBy;
-    }
-
-    public void setCreatedDate(Date createdDate) {
-        this.createdDate = createdDate;
-    }
-
-    public String getLastModifiedBy() {
-        return lastModifiedBy;
-    }
-
-    public void setLastModifiedBy(String lastModifiedBy) {
-        this.lastModifiedBy = lastModifiedBy;
-    }
-
-    public void setLastModifiedDate(Date lastModifiedDate) {
-        this.lastModifiedDate = lastModifiedDate;
-    }
 }

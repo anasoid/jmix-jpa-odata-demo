@@ -27,7 +27,9 @@
     <layout spacing="true" expand="editActions">
         <form id="form" dataContainer="productLocalizedDc">
             <column width="350px">
-                <textField id="localeField" property="locale"/>
+                <comboBox id="languageField" property="language">
+
+                </comboBox>
                 <textField id="nameField" property="name"/>
                 <textField id="descriptionField" property="description"/>
             </column>

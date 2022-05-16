@@ -3,12 +3,13 @@ package org.anasoid.jmixjpaodatademo.entity;
 import io.jmix.core.entity.annotation.JmixGeneratedValue;
 import io.jmix.core.metamodel.annotation.JmixEntity;
 
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.Id;
+import javax.persistence.MappedSuperclass;
 
 
 @JmixEntity
 @MappedSuperclass
-@Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
 public abstract class AbstractItem {
     @JmixGeneratedValue
     @Column(name = "PK", nullable = false)

@@ -1,16 +1,10 @@
 package org.anasoid.jmixjpaodatademo.entity.i18n;
 
-import io.jmix.core.entity.annotation.JmixGeneratedValue;
 import io.jmix.core.metamodel.annotation.JmixEntity;
 import org.anasoid.jmixjpaodatademo.entity.AbstractItem;
-import org.anasoid.jmixjpaodatademo.entity.catalog.Product;
-import org.springframework.data.annotation.CreatedBy;
-import org.springframework.data.annotation.CreatedDate;
-import org.springframework.data.annotation.LastModifiedBy;
-import org.springframework.data.annotation.LastModifiedDate;
 
 import javax.persistence.*;
-import java.util.Date;
+import javax.validation.constraints.NotNull;
 
 
 /*@Table(uniqueConstraints = {
@@ -24,28 +18,28 @@ import java.util.Date;
 public abstract class Localized<T extends AbstractLocalizedItem> extends AbstractItem {
 
 
-    @Column(name = "LOCALE", length = 10)
-    private String locale;
+    @Column(name = "LANG", length = 10, nullable = false, updatable = false)
+    @NotNull
+    private Language language;
 
     @ManyToOne
-    @JoinColumn(name = "ITEM_PK", nullable = false)
-    private Product item;
+    @JoinColumn(name = "ITEM_PK", nullable = false, updatable = false)
+    @NotNull
+    private T item;
 
-
-    public String getLocale() {
-        return locale;
+    public Language getLanguage() {
+        return language;
     }
 
-    public void setLocale(String locale) {
-        this.locale = locale;
+    public void setLanguage(Language language) {
+        this.language = language;
     }
 
-
-    public void setItem(Product item) {
+    public void setItem(T item) {
         this.item = item;
     }
 
-    public Product getItem() {
+    public T getItem() {
         return item;
     }
 }
