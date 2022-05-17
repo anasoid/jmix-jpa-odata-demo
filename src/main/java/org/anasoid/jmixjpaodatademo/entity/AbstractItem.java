@@ -3,15 +3,13 @@ package org.anasoid.jmixjpaodatademo.entity;
 import io.jmix.core.entity.annotation.JmixGeneratedValue;
 import io.jmix.core.metamodel.annotation.JmixEntity;
 
-import javax.persistence.Column;
-import javax.persistence.Id;
-import javax.persistence.MappedSuperclass;
+import javax.persistence.*;
 
 
 @JmixEntity
 @MappedSuperclass
 public abstract class AbstractItem {
-    @JmixGeneratedValue
+    @JmixGeneratedValue()
     @Column(name = "PK", nullable = false)
     @Id
     private Long pk;

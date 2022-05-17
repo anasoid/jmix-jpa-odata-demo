@@ -8,6 +8,14 @@
             <fetchPlan extends="_base"/>
             <loader/>
         </instance>
+        <collection id="productDl" class="org.anasoid.jmixjpaodatademo.entity.catalog.Product">
+            <fetchPlan extends="_base"/>
+            <loader id="productDl">
+                <query>
+                    <![CDATA[select e from Product e]]>
+                </query>
+            </loader>
+        </collection>
     </data>
     <facets>
         <dataLoadCoordinator auto="true"/>
@@ -27,9 +35,9 @@
     <layout spacing="true" expand="editActions">
         <form id="form" dataContainer="productLocalizedDc">
             <column width="350px">
-                <comboBox id="languageField" property="language">
-
-                </comboBox>
+                <textField id="pkField" property="pk" editable="false" datatype="long"/>
+                <textField id="itemField" property="item" editable="false" />
+                <comboBox id="languageField" property="language"/>
                 <textField id="nameField" property="name"/>
                 <textField id="descriptionField" property="description"/>
             </column>

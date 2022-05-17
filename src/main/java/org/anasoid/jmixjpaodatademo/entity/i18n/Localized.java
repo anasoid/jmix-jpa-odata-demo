@@ -2,6 +2,8 @@ package org.anasoid.jmixjpaodatademo.entity.i18n;
 
 import io.jmix.core.metamodel.annotation.JmixEntity;
 import org.anasoid.jmixjpaodatademo.entity.AbstractItem;
+import org.anasoid.jmixjpaodatademo.entity.catalog.Product;
+import org.anasoid.jmixjpaodatademo.entity.catalog.ProductLocalized;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
@@ -22,7 +24,7 @@ public abstract class Localized<T extends AbstractLocalizedItem> extends Abstrac
     @NotNull
     private Language language;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "ITEM_PK", nullable = false, updatable = false)
     @NotNull
     private T item;

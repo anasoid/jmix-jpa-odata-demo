@@ -41,7 +41,6 @@
             <actions>
                 <action id="create" type="create"/>
                 <action id="edit" type="edit"/>
-                <action id="refresh" type="refresh"/>
                 <action id="remove" type="remove"/>
             </actions>
             <columns>
@@ -54,7 +53,6 @@
                           alwaysVisible="true">
                 <button id="createBtn" action="productLocalizedsTable.create"/>
                 <button id="editBtn" action="productLocalizedsTable.edit"/>
-                <button id="refreshBtn" action="productLocalizedsTable.refresh"/>
                 <button id="removeBtn" action="productLocalizedsTable.remove"/>
             </buttonsPanel>
         </groupTable>

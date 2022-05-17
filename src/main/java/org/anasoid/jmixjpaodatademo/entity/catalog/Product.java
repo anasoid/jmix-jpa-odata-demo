@@ -2,6 +2,9 @@ package org.anasoid.jmixjpaodatademo.entity.catalog;
 
 import io.jmix.core.DeletePolicy;
 import io.jmix.core.entity.annotation.OnDeleteInverse;
+import io.jmix.core.metamodel.annotation.Composition;
+import io.jmix.core.metamodel.annotation.DependsOnProperties;
+import io.jmix.core.metamodel.annotation.InstanceName;
 import io.jmix.core.metamodel.annotation.JmixEntity;
 import org.anasoid.jmixjpaodatademo.entity.i18n.AbstractLocalizedItem;
 import org.anasoid.jmixjpaodatademo.i18n.LocaleContext;
@@ -16,8 +19,8 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 @JmixEntity
-@Table(name = "PRODUCT", indexes = {
-        @Index(columnList = "CODE, CATALOG_VERSION", unique = true)
+@Table(name = "PRODUCT", uniqueConstraints = {
+        @UniqueConstraint(name = "IDX_PRODUCT_CODE_CV_UNQ", columnNames = {"CODE", "CATALOG_VERSION"})
 })
 @Entity
 public class Product extends AbstractLocalizedItem<ProductLocalized> {
@@ -47,7 +50,8 @@ public class Product extends AbstractLocalizedItem<ProductLocalized> {
     private LocalDateTime endDate;
 
 
-    @OneToMany(mappedBy = "item", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "item", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
+    @Composition
     private Set<ProductLocalized> localizations = new HashSet<>();
 
 
@@ -125,5 +129,9 @@ public class Product extends AbstractLocalizedItem<ProductLocalized> {
         return endDate;
     }
 
-
+    @InstanceName
+    @DependsOnProperties({"code", "catalogVersion"})
+    public String getInstanceName() {
+        return String.format("%s/%s/%s (%s)", getCatalogVersion().getCatalog().getId(), getCatalogVersion().getVersion(), code, getPk());
+    }
 }

@@ -7,9 +7,9 @@
         <item screen="Catalog.browse" caption="msg://org.anasoid.jmixjpaodatademo.screen.catalog/catalogBrowse.menu"/>
         <item screen="CatalogVersion.browse"
               caption="msg://org.anasoid.jmixjpaodatademo.screen.catalogversion/catalogVersionBrowse.menu"/>
+        <item screen="Product.browse" caption="msg://org.anasoid.jmixjpaodatademo.screen.product/productBrowse.menu"/>
         <item screen="ProductLocalized.browse"
               caption="msg://org.anasoid.jmixjpaodatademo.screen.productlocalized/productLocalizedBrowse.menu"/>
-        <item screen="Product.browse" caption="msg://org.anasoid.jmixjpaodatademo.screen.product/productBrowse.menu"/>
     </menu>
 
 </menu-config>

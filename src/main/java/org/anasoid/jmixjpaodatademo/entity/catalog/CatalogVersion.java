@@ -27,7 +27,7 @@ public class CatalogVersion extends AbstractAuditableItem {
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     private Catalog catalog;
 
-    @Column(name = "VERSION", nullable = false)
+    @Column(name = "VERSION", nullable = false, length = 50)
     @NotBlank()
     @NotNull
     private String version;
