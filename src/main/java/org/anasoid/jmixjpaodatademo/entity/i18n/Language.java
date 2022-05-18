@@ -7,9 +7,9 @@ import javax.annotation.Nullable;
 
 public enum Language implements EnumClass<String> {
 
-    en("ENGLISH"),
-    de("GERMAN"),
-    fr("FRENCH");
+    ENGLISH("en"),
+    GERMAN("de"),
+    FRENCH("fr");
 
     private String id;
 

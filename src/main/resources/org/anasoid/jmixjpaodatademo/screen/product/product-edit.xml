@@ -50,8 +50,8 @@
                             <action id="entityClear" type="entity_clear"></action>
                         </actions>
                     </entityComboBox>
-                    <textField id="nameField" property="name"/>
-                    <textField id="descriptionField" property="description"/>
+                    <textField id="nameField" property="name" editable="false"/>
+                    <textField id="descriptionField" property="description" editable="false"/>
                     <dateField id="startDateField" property="startDate"/>
                     <dateField id="endDateField" property="endDate"/>
                 </column>
