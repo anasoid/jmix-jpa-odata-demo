@@ -1,9 +1,6 @@
 package org.anasoid.jmixjpaodatademo.entity.catalog;
 
-import io.jmix.core.DeletePolicy;
-import io.jmix.core.entity.annotation.OnDeleteInverse;
 import io.jmix.core.metamodel.annotation.Composition;
-import io.jmix.core.metamodel.annotation.DependsOnProperties;
 import io.jmix.core.metamodel.annotation.InstanceName;
 import io.jmix.core.metamodel.annotation.JmixEntity;
 import org.anasoid.jmixjpaodatademo.entity.i18n.AbstractLocalizedItem;
@@ -11,7 +8,6 @@ import org.anasoid.jmixjpaodatademo.i18n.LocaleContext;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
 import java.time.LocalDateTime;
 import java.util.HashSet;
 import java.util.Map;
@@ -28,12 +24,6 @@ public class Product extends AbstractLocalizedItem<ProductLocalized> {
     @NotBlank
     @Column(name = "CODE", nullable = false, updatable = false)
     private String code;
-
-    @OnDeleteInverse(DeletePolicy.DENY)
-    @NotNull
-    @JoinColumn(name = "CATALOG_VERSION", nullable = false)
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    private CatalogVersion catalogVersion;
 
 
     @Column(name = "NAME", length = 50)
@@ -69,14 +59,6 @@ public class Product extends AbstractLocalizedItem<ProductLocalized> {
 
     public void setCode(String code) {
         this.code = code;
-    }
-
-    public CatalogVersion getCatalogVersion() {
-        return catalogVersion;
-    }
-
-    public void setCatalogVersion(CatalogVersion catalogVersion) {
-        this.catalogVersion = catalogVersion;
     }
 
 
@@ -130,8 +112,8 @@ public class Product extends AbstractLocalizedItem<ProductLocalized> {
     }
 
     @InstanceName
-    @DependsOnProperties({"code", "catalogVersion"})
+
     public String getInstanceName() {
-        return String.format("%s/%s/%s (%s)", getCatalogVersion().getCatalog().getId(), getCatalogVersion().getVersion(), code, getPk());
+        return String.format("%s (%s)",  code, getPk());
     }
 }

@@ -6,21 +6,12 @@
         <instance id="productDc"
                   class="org.anasoid.jmixjpaodatademo.entity.catalog.Product">
             <fetchPlan extends="_base">
-                <property name="catalogVersion" fetchPlan="_base"/>
                 <property name="localizations" fetchPlan="_base"/>
             </fetchPlan>
             <collection id="localizedsDc" property="localizations"/>
 
             <loader/>
         </instance>
-        <collection id="catalogversionDl" class="org.anasoid.jmixjpaodatademo.entity.catalog.CatalogVersion">
-            <fetchPlan extends="_base"/>
-            <loader id="catalogVersionDl">
-                <query>
-                    <![CDATA[select e from CatalogVersion e]]>
-                </query>
-            </loader>
-        </collection>
     </data>
     <facets>
         <dataLoadCoordinator auto="true"/>
@@ -43,13 +34,6 @@
                 <column width="350px">
                     <textField id="pkField" property="pk" editable="false" datatype="long"/>
                     <textField id="codeField" property="code"/>
-                    <entityComboBox id="catalogVersionField" property="catalogVersion"
-                                    pageLength="10" optionsContainer="catalogversionDl">
-                        <actions>
-                            <action id="entityLookup" type="entity_lookup"></action>
-                            <action id="entityClear" type="entity_clear"></action>
-                        </actions>
-                    </entityComboBox>
                     <textField id="nameField" property="name" editable="false"/>
                     <textField id="descriptionField" property="description" editable="false"/>
                     <dateField id="startDateField" property="startDate"/>

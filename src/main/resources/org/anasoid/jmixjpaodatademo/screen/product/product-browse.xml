@@ -6,9 +6,6 @@
     <data readOnly="true">
         <collection id="productsDc"
                     class="org.anasoid.jmixjpaodatademo.entity.catalog.Product">
-            <fetchPlan extends="_base">
-                <property name="catalogVersion" fetchPlan="_base"/>
-            </fetchPlan>
             <loader id="productsDl">
                 <query>
                     <![CDATA[select e from Product e]]>
@@ -48,7 +45,6 @@
             <columns>
                 <column id="pk"/>
                 <column id="code"/>
-                <column id="catalogVersion"/>
                 <column id="name"/>
                 <column id="description"/>
                 <column id="startDate"/>
