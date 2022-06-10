@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<menu-config xmlns="http://jmix.io/schema/ui/menu">
+
+    <menu id="application" caption="msg://org.anasoid.jmixjpaodatademo.jmix/menu.application" insertBefore="administration">
+        <item screen="jmix_User.browse" caption="msg://org.anasoid.jmixjpaodatademo.jmix.screen.user/UserBrowse.caption"/>
+        <item screen="themeSettingsScreen" caption="msg://io.jmix.ui.app.themesettings/themeSettings.caption"/>
+        <item screen="Catalog.browse" caption="msg://org.anasoid.jmixjpaodatademo.jmix.screen.catalog/catalogBrowse.menu"/>
+        <item screen="CatalogVersion.browse"
+              caption="msg://org.anasoid.jmixjpaodatademo.jmix.screen.catalogversion/catalogVersionBrowse.menu"/>
+        <item screen="Product.browse" caption="msg://org.anasoid.jmixjpaodatademo.jmix.screen.product/productBrowse.menu"/>
+        <item screen="ProductLocalized.browse"
+              caption="msg://org.anasoid.jmixjpaodatademo.jmix.screen.productlocalized/productLocalizedBrowse.menu"/>
+    </menu>
+
+</menu-config>
