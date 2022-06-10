@@ -3,3 +3,4 @@ rootProject.name = 'jmix-jpa-odata-demo-all'
 
 includeBuild '../core'
 includeBuild '../jmix'
+includeBuild '../odata'
