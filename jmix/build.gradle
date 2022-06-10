@@ -36,14 +36,12 @@ dependencies {
 
     implementation 'org.springframework.boot:spring-boot-starter-web'
 
-    runtimeOnly 'org.hsqldb:hsqldb'
 
     testImplementation('org.springframework.boot:spring-boot-starter-test') {
         exclude group: 'org.junit.vintage', module: 'junit-vintage-engine'
     }
     implementation("org.anasoid.jmixjpaodatademo:core-starter:0.0.1-SNAPSHOT")
     implementation("mysql:mysql-connector-java")
-    implementation("org.mariadb.jdbc:mariadb-java-client")
 }
 
 test {
