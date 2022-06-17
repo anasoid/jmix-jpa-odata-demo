@@ -12,7 +12,7 @@ import org.anasoid.jmixjpaodatademo.core.i18n.LocaleContext;
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
-import java.time.LocalDateTime;
+import java.util.Date;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
@@ -43,11 +43,11 @@ public class Product extends AbstractLocalizedItem<ProductLocalized> {
     private String description;
 
     @Column(name = "START_DATE")
-    private LocalDateTime startDate;
+    private Date startDate;
 
     @Column(name = "END_DATE")
 
-    private LocalDateTime endDate;
+    private Date endDate;
 
 
     @OneToMany(mappedBy = "item", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
@@ -55,11 +55,11 @@ public class Product extends AbstractLocalizedItem<ProductLocalized> {
     private Set<ProductLocalized> localizations = new HashSet<>();
 
 
-    public void setStartDate(LocalDateTime startDate) {
+    public void setStartDate(Date startDate) {
         this.startDate = startDate;
     }
 
-    public void setEndDate(LocalDateTime endDate) {
+    public void setEndDate(Date endDate) {
         this.endDate = endDate;
     }
 
@@ -121,11 +121,11 @@ public class Product extends AbstractLocalizedItem<ProductLocalized> {
         return localizations;
     }
 
-    public LocalDateTime getStartDate() {
+    public Date getStartDate() {
         return startDate;
     }
 
-    public LocalDateTime getEndDate() {
+    public Date getEndDate() {
         return endDate;
     }
 

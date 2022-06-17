@@ -1,7 +1,7 @@
 plugins {
-	id 'org.springframework.boot' version '2.6.8'
-	id 'io.spring.dependency-management' version '1.0.11.RELEASE'
-	id 'java'
+    id 'org.springframework.boot' version '2.6.8'
+    id 'io.spring.dependency-management' version '1.0.11.RELEASE'
+    id 'java'
 }
 
 group = 'org.anasoid.jmixjpaodatademo.'
@@ -9,45 +9,56 @@ version = '0.0.1-SNAPSHOT'
 sourceCompatibility = '11'
 
 repositories {
-	mavenCentral()
-	maven {
-		url 'https://global.repo.jmix.io/repository/public'
-	}
+    mavenCentral()
+    maven {
+        url 'https://global.repo.jmix.io/repository/public'
+    }
 }
 
 configurations {
-	compileOnly {
-		extendsFrom annotationProcessor
-	}
+    all*.exclude group: 'javax.ws.rs', module: 'javax.ws.rs-api'
+    compileOnly {
+        extendsFrom annotationProcessor
+    }
 }
 
 repositories {
-	mavenCentral()
+    mavenCentral()
 }
 
 dependencies {
 
-	implementation ('org.anasoid.jmixjpaodatademo:core'){
-		transitive = false
-	}
+    implementation('org.anasoid.jmixjpaodatademo:core') {
+        transitive = false
+    }
 
-	implementation 'org.springframework.boot:spring-boot-starter-actuator'
-	implementation ('org.springframework.boot:spring-boot-starter-data-jpa'){
-		exclude group: 'org.hibernate', module: 'hibernate-entitymanager'
-		exclude group: 'org.hibernate', module: 'hibernate-core'
-		exclude group: 'org.hibernate.common', module: 'common-annotations'
-	}
-	implementation ('org.eclipse.persistence:org.eclipse.persistence.jpa:2.7.9-6-jmix')
-	implementation ('io.jmix.core:jmix-core:1.2.4'){
-		transitive = false
-	}
-	implementation 'org.springframework.boot:spring-boot-starter-web'
-	developmentOnly 'org.springframework.boot:spring-boot-devtools'
-	runtimeOnly 'mysql:mysql-connector-java'
-	annotationProcessor 'org.springframework.boot:spring-boot-configuration-processor'
-	testImplementation 'org.springframework.boot:spring-boot-starter-test'
+    implementation 'org.springframework.boot:spring-boot-starter-actuator'
+    implementation('org.springframework.boot:spring-boot-starter-data-jpa') {
+        exclude group: 'org.hibernate', module: 'hibernate-entitymanager'
+        exclude group: 'org.hibernate', module: 'hibernate-core'
+        exclude group: 'org.hibernate.common', module: 'common-annotations'
+    }
+    implementation('org.eclipse.persistence:org.eclipse.persistence.jpa:2.7.9-6-jmix')
+    implementation('io.jmix.core:jmix-core:1.2.4') {
+        transitive = false
+    }
+    implementation 'org.springframework.boot:spring-boot-starter-web'
+    developmentOnly 'org.springframework.boot:spring-boot-devtools'
+    runtimeOnly 'mysql:mysql-connector-java'
+    annotationProcessor 'org.springframework.boot:spring-boot-configuration-processor'
+    testImplementation 'org.springframework.boot:spring-boot-starter-test'
+
+    //Odata
+    implementation("org.apache.olingo:olingo-odata2-core:2.0.12") {
+        exclude group: 'javax.ws.rs', module: 'javax.ws.rs-api'
+    }
+    implementation("org.apache.olingo:olingo-odata2-jpa-processor-core:2.0.12")
+    implementation("org.apache.olingo:olingo-odata2-jpa-processor-ref:2.0.12") {
+        exclude group: 'org.eclipse.persistence', module: 'eclipselink'
+    }
+    implementation("org.springframework.boot:spring-boot-starter-jersey")
 }
 
 tasks.named('test') {
-	useJUnitPlatform()
+    useJUnitPlatform()
 }
