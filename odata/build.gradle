@@ -38,7 +38,7 @@ dependencies {
 		exclude group: 'org.hibernate.common', module: 'common-annotations'
 	}
 	implementation ('org.eclipse.persistence:org.eclipse.persistence.jpa:2.7.9-6-jmix')
-	implementation ('io.jmix.core:jmix-core:1.2.3'){
+	implementation ('io.jmix.core:jmix-core:1.2.4'){
 		transitive = false
 	}
 	implementation 'org.springframework.boot:spring-boot-starter-web'
