@@ -54,4 +54,10 @@ public class CatalogVersion extends AbstractAuditableItem {
     public String getInstanceName() {
         return String.format("%s %s", catalog.getId(), version);
     }
+
+    @PreUpdate
+    @PrePersist
+    public void calc() {
+        setIntegrationKey(getVersion() + "|"+getCatalog().getId());
+    }
 }

@@ -60,4 +60,10 @@ public class Catalog extends AbstractAuditableItem {
     public String getInstanceName() {
         return String.format("%s (%s)", id, getPk());
     }
+
+    @PreUpdate
+    @PrePersist
+    public void calc() {
+        setIntegrationKey(getId());
+    }
 }

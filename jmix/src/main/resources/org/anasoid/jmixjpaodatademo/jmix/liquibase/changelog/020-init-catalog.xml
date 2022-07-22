@@ -12,6 +12,7 @@
             <column name="REVISION" type="INT">
                 <constraints nullable="false"/>
             </column>
+            <column name="integrationKey" type="VARCHAR(255)"/>
             <column name="CREATED_BY" type="VARCHAR(255)"/>
             <column name="CREATED_DATE" type="DATETIME"/>
             <column name="LAST_MODIFIED_BY" type="VARCHAR(255)"/>
@@ -32,6 +33,7 @@
             <column name="REVISION" type="INT">
                 <constraints nullable="false"/>
             </column>
+            <column name="integrationKey" type="VARCHAR(255)"/>
             <column name="CREATED_BY" type="VARCHAR(255)"/>
             <column name="CREATED_DATE" type="DATETIME"/>
             <column name="LAST_MODIFIED_BY" type="VARCHAR(255)"/>
@@ -48,11 +50,19 @@
     <changeSet id="10" author="jmix-jpa-odata-demo"  context="!cuba">
 
         <insert tableName="CATALOG" dbms="postgresql, mssql, hsqldb, oracle, mysql, mariadb">
-            <column name="ID" value="1"/>
             <column name="REVISION" value="1"/>
             <column name="ID" value="default"/>
             <column name="NAME" value="default"/>
+            <column name="integrationKey" value="default"/>
         </insert>
+        <insert tableName="CATALOG" dbms="postgresql, mssql, hsqldb, oracle, mysql, mariadb">
+            <column name="REVISION" value="1"/>
+            <column name="ID" value="electronicsProductCatalog"/>
+            <column name="NAME" value="electronicsProductCatalog"/>
+            <column name="integrationKey" value="electronicsProductCatalog"/>
+        </insert>
+
+
     </changeSet>
     <changeSet id="11" author="jmix-jpa-odata-demo"  context="!cuba">
 
@@ -60,11 +70,20 @@
             <column name="REVISION" value="1"/>
             <column name="CATALOG" value="1"/>
             <column name="VERSION" value="stage"/>
+            <column name="integrationKey" value="stage|default"/>
         </insert>
         <insert tableName="CATALOG_VERSION" dbms="postgresql, mssql, hsqldb, oracle, mysql, mariadb">
             <column name="REVISION" value="1"/>
             <column name="CATALOG" value="1"/>
             <column name="VERSION" value="online"/>
+            <column name="integrationKey" value="online|default"/>
         </insert>
+        <insert tableName="CATALOG_VERSION" dbms="postgresql, mssql, hsqldb, oracle, mysql, mariadb">
+            <column name="REVISION" value="1"/>
+            <column name="CATALOG" value="2"/>
+            <column name="VERSION" value="online"/>
+            <column name="integrationKey" value="Online|electronicsProductCatalog"/>
+        </insert>
+
     </changeSet>
 </databaseChangeLog>

@@ -38,6 +38,7 @@
         <form id="form" dataContainer="catalogVersionDc">
             <column width="350px">
                 <textField id="pkField" property="pk" editable="false" datatype="long"/>
+                <textField id="integrationKeyField" property="integrationKey" editable="false"/>
                 <entityComboBox id="catalogField" property="catalog"
                                 pageLength="10" optionsContainer="catalogDl" />
                 <textField id="versionField" property="version"/>

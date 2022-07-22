@@ -18,7 +18,7 @@ public class ProductLocalized extends Localized<Product> {
     @Column(name = "NAME", length = 50)
     private String name;
 
-    @Column(name = "DESCRIPTION", length = 250)
+    @Column(name = "DESCRIPTION", length = 9999)
     private String description;
 
     public String getName() {

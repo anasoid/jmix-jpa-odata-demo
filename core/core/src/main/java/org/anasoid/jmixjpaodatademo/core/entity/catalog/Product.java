@@ -39,7 +39,7 @@ public class Product extends AbstractLocalizedItem<ProductLocalized> {
     @Column(name = "NAME", length = 50)
     private String name;
 
-    @Column(name = "DESCRIPTION", length = 250)
+    @Column(name = "DESCRIPTION", length = 9999)
     private String description;
 
     @Column(name = "START_DATE")
@@ -52,7 +52,7 @@ public class Product extends AbstractLocalizedItem<ProductLocalized> {
 
     @OneToMany(mappedBy = "item", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
     @Composition
-    private Set<ProductLocalized> localizations = new HashSet<>();
+    private Set<ProductLocalized> localizedAttributes = new HashSet<>();
 
 
     public void setStartDate(Date startDate) {
@@ -82,7 +82,7 @@ public class Product extends AbstractLocalizedItem<ProductLocalized> {
 
     public String getName() {
 //		With fallback language as English
-        Map<String, ProductLocalized> toMap = localizations.stream().collect(Collectors.toMap(t -> t.getLanguage().getId(), t -> t));
+        Map<String, ProductLocalized> toMap = localizedAttributes.stream().collect(Collectors.toMap(t -> t.getLanguage().getId(), t -> t));
 
         if (toMap.get(LocaleContext.getCurrentLocale()) == null) {
             if (toMap.get(LocaleContext.getDefaultLocale()) == null) {
@@ -96,7 +96,7 @@ public class Product extends AbstractLocalizedItem<ProductLocalized> {
 
     public String getDescription() {
 //		With fallback language as English
-        Map<String, ProductLocalized> toMap = localizations.stream().collect(Collectors.toMap(t -> t.getLanguage().getId(), t -> t));
+        Map<String, ProductLocalized> toMap = localizedAttributes.stream().collect(Collectors.toMap(t -> t.getLanguage().getId(), t -> t));
         if (toMap.get(LocaleContext.getCurrentLocale()) == null) {
             if (toMap.get(LocaleContext.getDefaultLocale()) == null) {
                 return null;
@@ -117,8 +117,8 @@ public class Product extends AbstractLocalizedItem<ProductLocalized> {
         this.description = description;
     }
 
-    public Set<ProductLocalized> getLocalizations() {
-        return localizations;
+    public Set<ProductLocalized> getLocalizedAttributes() {
+        return localizedAttributes;
     }
 
     public Date getStartDate() {
@@ -133,5 +133,10 @@ public class Product extends AbstractLocalizedItem<ProductLocalized> {
     @DependsOnProperties({"code", "catalogVersion"})
     public String getInstanceName() {
         return String.format("%s/%s/%s (%s)", getCatalogVersion().getCatalog().getId(), getCatalogVersion().getVersion(), code, getPk());
+    }
+    @PreUpdate
+    @PrePersist
+    public void calc() {
+        setIntegrationKey(getCatalogVersion().getIntegrationKey() + "|"+getCode());
     }
 }
