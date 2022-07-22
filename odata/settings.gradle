@@ -1,7 +1,2 @@
 rootProject.name = 'odata'
 
-includeBuild('../core') {
-    dependencySubstitution {
-        substitute module('org.anasoid.jmixjpaodatademo:core') using project(':core')
-    }
-}
