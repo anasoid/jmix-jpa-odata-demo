@@ -1,4 +1,4 @@
-package org.anasoid.jmixjjmixpaodatademo.odata.controllers;
+package org.anasoid.jmixjpaodatademo.odata.controllers;
 
 import org.apache.olingo.commons.api.ex.ODataException;
 import org.springframework.beans.factory.annotation.Autowired;
