@@ -1,4 +1,4 @@
-package org.anasoid.jmixjpaodatademo.odata;
+package org.anasoid.jmixjpaodatademo.odata.config;
 
 import org.eclipse.persistence.config.PersistenceUnitProperties;
 import org.springframework.beans.factory.ObjectProvider;
