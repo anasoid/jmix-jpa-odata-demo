@@ -29,6 +29,18 @@
             <column name="ID" value="fr"/>
             <column name="NAME" value="French"/>
         </insert>
+        <insert tableName="LANGUAGE" dbms="postgresql, mssql, hsqldb, oracle, mysql, mariadb">
+            <column name="ID" value="ja"/>
+            <column name="NAME" value="Japanese"/>
+        </insert>
+        <insert tableName="LANGUAGE" dbms="postgresql, mssql, hsqldb, oracle, mysql, mariadb">
+            <column name="ID" value="zh"/>
+            <column name="NAME" value="Chinese"/>
+        </insert>
+        <insert tableName="LANGUAGE" dbms="postgresql, mssql, hsqldb, oracle, mysql, mariadb">
+            <column name="ID" value="es"/>
+            <column name="NAME" value="Spanish"/>
+        </insert>
 
     </changeSet>
 </databaseChangeLog>

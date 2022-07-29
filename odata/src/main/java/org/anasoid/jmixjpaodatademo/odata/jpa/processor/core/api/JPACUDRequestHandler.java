@@ -17,8 +17,12 @@ import com.sap.olingo.jpa.processor.core.processor.JPARequestLink;
 import org.apache.olingo.commons.api.http.HttpMethod;
 import org.apache.olingo.commons.api.http.HttpStatusCode;
 
+import org.anasoid.jmixjpaodatademo.core.entity.i18n.Localized;
+
 import javax.persistence.EntityManager;
 import javax.persistence.GeneratedValue;
+import javax.persistence.NoResultException;
+import javax.persistence.Query;
 import javax.persistence.metamodel.EntityType;
 import javax.persistence.metamodel.SingularAttribute;
 import java.lang.reflect.AnnotatedElement;
@@ -49,7 +53,7 @@ public class JPACUDRequestHandler extends JPAExampleCUDRequestHandler {
             throws ODataJPAProcessException {
 
         // POST an Entity
-        Object instance = createOneEntity(requestEntity, null);
+        Object instance = createOrGetOneEntity(requestEntity, null, em);
         if (requestEntity.getKeys().isEmpty()) {
             if (!hasGeneratedKey(requestEntity, em)) {
                 final Object old = em.find(requestEntity.getEntityType().getTypeClass(),
@@ -58,7 +62,7 @@ public class JPACUDRequestHandler extends JPAExampleCUDRequestHandler {
                     throw new JPAExampleModifyException(ENTITY_ALREADY_EXISTS, HttpStatusCode.BAD_REQUEST);
             } else {
                 // Pre-fill granted ID, so it can be used for deep inserts
-                em.persist(instance);
+                // em.persist(instance);
             }
         } else {
             // POST on Link only // https://issues.oasis-open.org/browse/ODATA-1294
@@ -188,15 +192,54 @@ public class JPACUDRequestHandler extends JPAExampleCUDRequestHandler {
         }
     }
 
-    private Object createOneEntity(final JPARequestEntity requestEntity,
-                                   final Object parent) throws ODataJPAProcessException {
+    private Object createOrGetOneEntity(final JPARequestEntity requestEntity,
+                                        final Object parent, final EntityManager em) throws ODataJPAProcessException {
 
-        final Object instance = createInstance(getConstructor(requestEntity.getEntityType(), parent), parent);
+        Object instance = getOneEntity(requestEntity, parent, em);
+
+        if (instance == null) {
+            instance = createInstance(getConstructor(requestEntity.getEntityType(), parent), parent);
+
+        }else{
+            if(!isLocalized(requestEntity)){
+                return instance;
+            }
+        }
+
         requestEntity.getModifyUtil().setAttributesDeep(requestEntity.getData(), instance, requestEntity.getEntityType());
         checkAuthorities(instance, requestEntity.getEntityType(), requestEntity.getClaims(), requestEntity.getModifyUtil());
         entityBuffer.put(instance, requestEntity);
         return instance;
     }
+
+    private Object getOneEntity(final JPARequestEntity requestEntity,
+                                final Object parent, final EntityManager em) throws ODataJPAProcessException {
+
+        Object instance = null;
+        if (hasIntegrationKey(requestEntity)) {
+            Query query = em.createQuery(String.format("Select i from %s i Where i.integrationKey = :integrationKey",
+                    requestEntity.getEntityType().getTypeClass().getSimpleName()));
+            query.setParameter("integrationKey", requestEntity.getData().get("integrationKey"));
+            try {
+                instance = query.getSingleResult();
+            } catch (NoResultException e) {
+                // instance will be null
+            }
+        } else if (isLocalized(requestEntity)) {
+            Query query = em.createQuery(String.format("Select i from %s i Where i.language = :language AND i.item = :item ",
+                    requestEntity.getEntityType().getTypeClass().getSimpleName()));
+            query.setParameter("language", requestEntity.getData().get("language"));
+            query.setParameter("item", parent);
+            try {
+                instance = query.getSingleResult();
+            } catch (NoResultException e) {
+                // instance will be null
+            }
+        }
+
+        return instance;
+    }
+
 
     private String determineAuthorizationPrefix(final Object restriction) throws JPAExampleModifyException {
         final String[] minPrefix = ((String) restriction).split("[*%+_]");
@@ -263,11 +306,11 @@ public class JPACUDRequestHandler extends JPAExampleCUDRequestHandler {
             final JPAAssociationPath pathInfo = entity.getKey();
             for (final JPARequestEntity requestEntity : entity.getValue()) {
 
-                final Object newInstance = createOneEntity(requestEntity, parentInstance);
+                final Object newInstance = createOrGetOneEntity(requestEntity, parentInstance, em);
                 util.linkEntities(parentInstance, newInstance, pathInfo);
                 try {
                     final JPAAssociationAttribute attribute = pathInfo.getPartner();
-                    if (attribute != null) {
+                    if (attribute != null && attribute.getPath() != null) {
                         util.linkEntities(newInstance, parentInstance, attribute.getPath());
                     }
                 } catch (final ODataJPAModelException e) {
@@ -332,5 +375,17 @@ public class JPACUDRequestHandler extends JPAExampleCUDRequestHandler {
         } catch (final ODataJPAModelException e) {
             return false;
         }
+    }
+
+    private boolean hasIntegrationKey(final JPARequestEntity requestEntity) {
+
+        return requestEntity.getData().entrySet().stream().anyMatch(s -> "integrationKey".equals(s.getKey()));
+
+    }
+
+    private boolean isLocalized(final JPARequestEntity requestEntity) {
+
+        return requestEntity.getEntityType().getTypeClass().getSuperclass().equals(Localized.class);
+
     }
 }

@@ -83,7 +83,9 @@ public class Product extends AbstractLocalizedItem<ProductLocalized> {
 
     public String getName() {
 //		With fallback language as English
-        Map<String, ProductLocalized> toMap = localizedAttributes.stream().collect(Collectors.toMap(t -> t.getLang().getId(), t -> t));
+        Map<String, ProductLocalized> toMap = localizedAttributes.stream().collect(Collectors.toMap(t ->
+                        t.getLang() != null ? t.getLang().getId() : t.getLanguage()
+                , t -> t));
 
         if (toMap.get(LocaleContext.getCurrentLocale()) == null) {
             if (toMap.get(LocaleContext.getDefaultLocale()) == null) {
@@ -97,7 +99,7 @@ public class Product extends AbstractLocalizedItem<ProductLocalized> {
 
     public String getDescription() {
 //		With fallback language as English
-        Map<String, ProductLocalized> toMap = localizedAttributes.stream().collect(Collectors.toMap(t -> t.getLang().getId(), t -> t));
+        Map<String, ProductLocalized> toMap = localizedAttributes.stream().collect(Collectors.toMap(t -> t.getLang() != null ? t.getLang().getId() : t.getLanguage(), t -> t));
         if (toMap.get(LocaleContext.getCurrentLocale()) == null) {
             if (toMap.get(LocaleContext.getDefaultLocale()) == null) {
                 return null;
