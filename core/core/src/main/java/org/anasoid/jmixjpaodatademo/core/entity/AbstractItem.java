@@ -1,5 +1,6 @@
 package org.anasoid.jmixjpaodatademo.core.entity;
 
+import com.sap.olingo.jpa.metadata.core.edm.annotation.EdmIgnore;
 import io.jmix.core.entity.annotation.JmixGeneratedValue;
 import io.jmix.core.metamodel.annotation.JmixEntity;
 
@@ -10,9 +11,10 @@ import javax.persistence.*;
 @JmixEntity
 @MappedSuperclass
 public abstract class AbstractItem {
-    @JmixGeneratedValue()
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "PK", nullable = false)
     @Id
+    @EdmIgnore
     private Long pk;
 
     @Column(name = "integrationKey", nullable = true)

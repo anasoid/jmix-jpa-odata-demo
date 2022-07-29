@@ -6,6 +6,9 @@ dependencies {
     implementation 'io.jmix.ui:jmix-ui-starter'
     implementation 'io.jmix.ui:jmix-ui-themes'
 
+    //Odata
+    implementation("com.sap.olingo:odata-jpa-metadata:1.0.8")
+
     testImplementation('org.springframework.boot:spring-boot-starter-test') {
         exclude group: 'org.junit.vintage', module: 'junit-vintage-engine'
     }

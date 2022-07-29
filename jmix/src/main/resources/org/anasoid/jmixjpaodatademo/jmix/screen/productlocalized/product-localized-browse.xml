@@ -44,7 +44,7 @@
                 <action id="remove" type="remove"/>
             </actions>
             <columns>
-                <column id="language"/>
+                <column id="lang"/>
                 <column id="name"/>
                 <column id="description"/>
             </columns>

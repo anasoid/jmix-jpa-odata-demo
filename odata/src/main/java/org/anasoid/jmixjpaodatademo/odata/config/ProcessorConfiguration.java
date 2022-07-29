@@ -1,5 +1,7 @@
 package org.anasoid.jmixjpaodatademo.odata.config;
 
+import org.anasoid.jmixjpaodatademo.odata.edm.mapper.api.APINameBuilder;
+import org.anasoid.jmixjpaodatademo.odata.jpa.processor.core.api.JPACUDRequestHandler;
 import org.apache.olingo.commons.api.ex.ODataException;
 import org.apache.olingo.server.api.debug.DefaultDebugSupport;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,6 +35,7 @@ public class ProcessorConfiguration {
                 .setEntityManagerFactory(emf)
                 .setTypePackage(rootPackages)
                 .setRequestMappingPath("odata")
+                .setEdmNameBuilder(new APINameBuilder(punit))
                 .build();
     }
 
@@ -41,7 +44,7 @@ public class ProcessorConfiguration {
     public JPAODataRequestContext requestContext() {
 
         return JPAODataRequestContext.with()
-                .setCUDRequestHandler(new JPAExampleCUDRequestHandler())
+                .setCUDRequestHandler(new JPACUDRequestHandler())
                 .setDebugSupport(new DefaultDebugSupport())
                 .build();
     }

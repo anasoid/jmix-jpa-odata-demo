@@ -7,9 +7,9 @@
                   class="org.anasoid.jmixjpaodatademo.core.entity.catalog.Product">
             <fetchPlan extends="_base">
                 <property name="catalogVersion" fetchPlan="_base"/>
-                <property name="localizations" fetchPlan="_base"/>
+                <property name="localizedAttributes" fetchPlan="_base"/>
             </fetchPlan>
-            <collection id="localizedsDc" property="localizations"/>
+            <collection id="localizedsDc" property="localizedAttributes"/>
 
             <loader/>
         </instance>
@@ -65,7 +65,7 @@
                     </actions>
                     <columns>
                         <column id="pk"/>
-                        <column id="language"/>
+                        <column id="lang"/>
                         <column id="name"/>
                         <column id="description"/>
                     </columns>

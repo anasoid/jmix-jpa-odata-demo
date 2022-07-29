@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                      http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.8.xsd">
+    <changeSet id="1" author="jmix-jpa-odata-demo">
+        <createTable tableName="LANGUAGE">
+            <column name="ID" type="VARCHAR(255)">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="PK_LANGUAGE"/>
+            </column>
+            <column name="NAME" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+
+    <changeSet id="10" author="jmix-jpa-odata-demo"  context="!cuba">
+
+        <insert tableName="LANGUAGE" dbms="postgresql, mssql, hsqldb, oracle, mysql, mariadb">
+            <column name="ID" value="en"/>
+            <column name="NAME" value="English"/>
+        </insert>
+        <insert tableName="LANGUAGE" dbms="postgresql, mssql, hsqldb, oracle, mysql, mariadb">
+            <column name="ID" value="de"/>
+            <column name="NAME" value="Germany"/>
+        </insert>
+        <insert tableName="LANGUAGE" dbms="postgresql, mssql, hsqldb, oracle, mysql, mariadb">
+            <column name="ID" value="fr"/>
+            <column name="NAME" value="French"/>
+        </insert>
+
+    </changeSet>
+</databaseChangeLog>

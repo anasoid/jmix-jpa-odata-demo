@@ -34,7 +34,7 @@ task syncEntity(type: Sync) {
     description("Synchronize entity")
     group("myproject")
     from '../core/core/src/main/java/org/anasoid/jmixjpaodatademo/core'
-    into 'gensrc/main/java/anasoid/jmixjpaodatademo/core'
+    into 'gensrc/main/java/org/anasoid/jmixjpaodatademo/core'
     exclude("**/CoreConfiguration.java")
 
 }
@@ -75,6 +75,7 @@ dependencies {
     //Odata
     implementation("com.sap.olingo:odata-jpa-processor:1.0.8")
     implementation("com.sap.olingo:odata-jpa-processor-cb:1.0.8")
+    implementation("com.sap.olingo:odata-jpa-metadata:1.0.8")
     implementation("com.sap.olingo:odata-jpa-spring-support:1.0.8")
 
 }

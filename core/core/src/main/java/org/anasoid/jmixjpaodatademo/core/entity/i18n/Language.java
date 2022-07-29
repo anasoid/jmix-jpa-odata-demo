@@ -1,33 +1,48 @@
 package org.anasoid.jmixjpaodatademo.core.entity.i18n;
 
-import io.jmix.core.metamodel.datatype.impl.EnumClass;
+import io.jmix.core.metamodel.annotation.InstanceName;
+import io.jmix.core.metamodel.annotation.JmixEntity;
 
-import javax.annotation.Nullable;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
+import javax.validation.constraints.NotBlank;
 
+@JmixEntity
+@Table(name = "LANGUAGE")
+@Entity
+public class Language {
 
-public enum Language implements EnumClass<String> {
-
-    ENGLISH("en"),
-    GERMAN("de"),
-    FRENCH("fr");
-
+    @NotBlank
+    @Column(name = "ID", nullable = false, updatable = false)
+    @Id
     private String id;
 
-    Language(String value) {
-        this.id = value;
-    }
+
+    @NotBlank
+    @Column(name = "NAME", nullable = false, updatable = false)
+    private String name;
 
     public String getId() {
         return id;
     }
 
-    @Nullable
-    public static Language fromId(String id) {
-        for (Language at : Language.values()) {
-            if (at.getId().equals(id)) {
-                return at;
-            }
-        }
-        return null;
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    @InstanceName
+
+    public String getInstanceName() {
+        return getName();
     }
 }

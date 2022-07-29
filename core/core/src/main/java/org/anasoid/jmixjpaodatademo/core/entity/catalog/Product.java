@@ -33,6 +33,7 @@ public class Product extends AbstractLocalizedItem<ProductLocalized> {
     @NotNull
     @JoinColumn(name = "CATALOG_VERSION", nullable = false)
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @AssociationOverride(name = "catalogVersion")
     private CatalogVersion catalogVersion;
 
 
@@ -82,7 +83,7 @@ public class Product extends AbstractLocalizedItem<ProductLocalized> {
 
     public String getName() {
 //		With fallback language as English
-        Map<String, ProductLocalized> toMap = localizedAttributes.stream().collect(Collectors.toMap(t -> t.getLanguage().getId(), t -> t));
+        Map<String, ProductLocalized> toMap = localizedAttributes.stream().collect(Collectors.toMap(t -> t.getLang().getId(), t -> t));
 
         if (toMap.get(LocaleContext.getCurrentLocale()) == null) {
             if (toMap.get(LocaleContext.getDefaultLocale()) == null) {
@@ -96,7 +97,7 @@ public class Product extends AbstractLocalizedItem<ProductLocalized> {
 
     public String getDescription() {
 //		With fallback language as English
-        Map<String, ProductLocalized> toMap = localizedAttributes.stream().collect(Collectors.toMap(t -> t.getLanguage().getId(), t -> t));
+        Map<String, ProductLocalized> toMap = localizedAttributes.stream().collect(Collectors.toMap(t -> t.getLang().getId(), t -> t));
         if (toMap.get(LocaleContext.getCurrentLocale()) == null) {
             if (toMap.get(LocaleContext.getDefaultLocale()) == null) {
                 return null;
@@ -134,9 +135,12 @@ public class Product extends AbstractLocalizedItem<ProductLocalized> {
     public String getInstanceName() {
         return String.format("%s/%s/%s (%s)", getCatalogVersion().getCatalog().getId(), getCatalogVersion().getVersion(), code, getPk());
     }
+
     @PreUpdate
     @PrePersist
     public void calc() {
-        setIntegrationKey(getCatalogVersion().getIntegrationKey() + "|"+getCode());
+        if (getIntegrationKey() == null) {
+            setIntegrationKey(getCatalogVersion().getIntegrationKey() + "|" + getCode());
+        }
     }
 }

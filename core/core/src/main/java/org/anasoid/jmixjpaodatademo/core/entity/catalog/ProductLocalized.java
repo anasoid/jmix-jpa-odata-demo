@@ -3,10 +3,8 @@ package org.anasoid.jmixjpaodatademo.core.entity.catalog;
 import io.jmix.core.metamodel.annotation.JmixEntity;
 import org.anasoid.jmixjpaodatademo.core.entity.i18n.Localized;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Table;
-import javax.persistence.UniqueConstraint;
+import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 
 @JmixEntity
 @Table(name = "PRODUCT_LOCALIZED", uniqueConstraints = {
@@ -35,5 +33,19 @@ public class ProductLocalized extends Localized<Product> {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "ITEM_PK", nullable = false, updatable = false)
+    @NotNull
+    @AssociationOverride(name = "item")
+    private Product item;
+
+
+    public Product getItem() {
+        return item;
+    }
+    public void setItem(Product item) {
+        this.item = item;
     }
 }
