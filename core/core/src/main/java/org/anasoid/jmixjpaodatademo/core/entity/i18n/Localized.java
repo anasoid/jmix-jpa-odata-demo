@@ -21,14 +21,14 @@ import javax.validation.constraints.NotNull;
 @Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
 public abstract class Localized<T extends AbstractLocalizedItem> extends AbstractItem {
 
-    @Column(name = "LANG", nullable = false)
+    @Column(name = "LANG", nullable = false, updatable = false, insertable = false)
     @NotNull
     @EdmAlias(name = "language")
     private String language;
 
-    @JoinColumn(name = "LANG", nullable = false, updatable = false, insertable = false)
+    @JoinColumn(name = "LANG", nullable = false, updatable = false)
     @NotNull
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @ManyToOne(fetch = FetchType.EAGER, optional = false)
     @EdmIgnore
     private Language lang;
 

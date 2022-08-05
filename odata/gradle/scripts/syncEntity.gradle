@@ -5,8 +5,8 @@ task syncEntity(type: Sync) {
     group("myproject")
     from '../core/core/src/main/java/org/anasoid/jmixjpaodatademo/core'
     into 'gensrc/main/java/org/anasoid/jmixjpaodatademo/core'
-    filter { line -> line.replaceAll('@Column(name = "LANG", nullable = false)', '@Column(name = "LANG", nullable = false, updatable = false, insertable = false') }
-    filter { line -> line.replaceAll('@JoinColumn(name = "LANG", nullable = false, updatable = false, insertable = false)', '@JoinColumn(name = "LANG", nullable = false)') }
+    filter { line -> line.replaceAll('@JoinColumn\\(name = "LANG", nullable = false, updatable = false\\)', '@JoinColumn(name = "LANG", nullable = false, updatable = false, insertable = false)') }
+    filter { line -> line.replaceAll('@Column\\(name = "LANG", nullable = false, updatable = false, insertable = false\\)', '@Column(name = "LANG", nullable = false, updatable = false)') }
 
     exclude("**/CoreConfiguration.java")
 

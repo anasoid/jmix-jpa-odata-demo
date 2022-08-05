@@ -46,14 +46,14 @@
                 <textField id="pkField" property="pk" editable="false" datatype="long"/>
                 <!--<textField id="itemField" property="item" editable="false" />-->
                 <entityComboBox id="languageField" property="lang"
-                                pageLength="10" optionsContainer="languageDl">
+                                pageLength="10" optionsContainer="languageDl" required="true" >
                     <actions>
                         <action id="entityLookup" type="entity_lookup"></action>
                         <action id="entityClear" type="entity_clear"></action>
                     </actions>
                 </entityComboBox>
-                <textField id="nameField" property="name"/>
-                <textField id="descriptionField" property="description"/>
+                <textField id="nameField" property="name" />
+                <richTextArea id="descriptionField" property="description" />
             </column>
         </form>
         <hbox id="editActions" spacing="true">
