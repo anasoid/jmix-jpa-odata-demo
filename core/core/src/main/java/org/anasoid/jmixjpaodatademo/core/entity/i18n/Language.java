@@ -21,7 +21,7 @@ public class Language {
 
 
     @NotBlank
-    @Column(name = "NAME", nullable = false, updatable = false)
+    @Column(name = "NAME", nullable = false)
     private String name;
 
     public String getId() {

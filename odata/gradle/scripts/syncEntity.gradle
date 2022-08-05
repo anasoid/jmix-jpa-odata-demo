@@ -1,0 +1,20 @@
+import org.apache.tools.ant.filters.*
+
+task syncEntity(type: Sync) {
+    description("Synchronize entity")
+    group("myproject")
+    from '../core/core/src/main/java/org/anasoid/jmixjpaodatademo/core'
+    into 'gensrc/main/java/org/anasoid/jmixjpaodatademo/core'
+    filter { line -> line.replaceAll('@Column(name = "LANG", nullable = false)', '@Column(name = "LANG", nullable = false, updatable = false, insertable = false') }
+    filter { line -> line.replaceAll('@JoinColumn(name = "LANG", nullable = false, updatable = false, insertable = false)', '@JoinColumn(name = "LANG", nullable = false)') }
+
+    exclude("**/CoreConfiguration.java")
+
+}
+
+
+task cleanGenSrc(type: Delete) {
+    description("Delete genserc")
+    group("myproject")
+    delete 'gensrc/main/java'
+}

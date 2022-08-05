@@ -29,22 +29,10 @@ repositories {
 
 sourceSets.main.java.srcDirs = ['gensrc/main/java', 'src/main/java']
 
-
-task syncEntity(type: Sync) {
-    description("Synchronize entity")
-    group("myproject")
-    from '../core/core/src/main/java/org/anasoid/jmixjpaodatademo/core'
-    into 'gensrc/main/java/org/anasoid/jmixjpaodatademo/core'
-    exclude("**/CoreConfiguration.java")
-
-}
+apply from: "${rootProject.projectDir}/gradle/scripts/syncEntity.gradle"
 
 
-task cleanGenSrc(type: Delete) {
-    description("Delete genserc")
-    group("myproject")
-    delete 'gensrc/main/java'
-}
+
 
 compileJava.dependsOn syncEntity
 clean.dependsOn cleanGenSrc
