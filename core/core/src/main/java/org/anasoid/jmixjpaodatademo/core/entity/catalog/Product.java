@@ -37,7 +37,7 @@ public class Product extends AbstractLocalizedItem<ProductLocalized> {
     private CatalogVersion catalogVersion;
 
 
-    @Column(name = "NAME", length = 50)
+    @Column(name = "NAME", length = 255)
     private String name;
 
     @Column(name = "DESCRIPTION", length = 9999)

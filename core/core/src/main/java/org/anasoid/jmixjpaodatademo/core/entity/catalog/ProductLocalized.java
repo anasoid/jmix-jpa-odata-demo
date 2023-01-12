@@ -13,7 +13,7 @@ import javax.validation.constraints.NotNull;
 @Entity
 public class ProductLocalized extends Localized<Product> {
 
-    @Column(name = "NAME", length = 50)
+    @Column(name = "NAME", length = 255)
     private String name;
 
     @Column(name = "DESCRIPTION", length = 9999)
